@@ -1,0 +1,18 @@
+# 接口自动化测试多环境配置
+# 学习要点：企业项目中通常用 yaml 管理多套环境（dev/test/prod），
+# 通过环境变量或命令行参数切换，测试代码中不硬编码任何 URL。
+
+default: test   # 未指定环境时默认使用哪套
+
+test:
+  base_url: https://jsonplaceholder.typicode.com
+  timeout: 10
+  max_retries: 2
+  # 真实项目中这里还会有：
+  # auth_url: https://xxx/oauth/token
+  # username / password 或 api_key（放环境变量，不进 git）
+
+dev:
+  base_url: https://jsonplaceholder.typicode.com
+  timeout: 5
+  max_retries: 1

@@ -1,0 +1,18 @@
+# 数据驱动测试数据 —— 学习要点：测试数据和测试代码分离
+# 修改用例数据不需要动代码，非开发同学也能维护
+users:
+  - id: 1
+    name_contains: "Leanne"
+  - id: 2
+    name_contains: "Ervin"
+  - id: 3
+    name_contains: "Clementine"
+
+# 创建用户的请求体模板（JSONPlaceholder 会原样返回）
+new_posts:
+  - title: "自动化测试第一篇"
+    body: "数据驱动验证内容"
+    user_id: 1
+  - title: "参数化第二篇"
+    body: "不同数据走同一个用例"
+    user_id: 2

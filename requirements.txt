@@ -1,0 +1,12 @@
+# 运行本项目的 Python 环境建议 >= 3.9
+# 安装: pip install -r requirements.txt
+
+pytest>=8.0          # 测试框架
+pytest-html>=4.0     # HTML 测试报告: pytest --html=reports/report.html --self-contained-html
+pytest-xdist>=3.0    # 并行执行: pytest -n auto
+pytest-rerunfailures>=14.0  # 失败自动重试: pytest --reruns 2
+requests>=2.31       # HTTP 客户端
+responses>=0.25      # HTTP 层 mock（离线接口测试）
+jsonschema>=4.20     # 响应结构校验
+pyyaml>=6.0          # 配置与测试数据文件
+# pytest-cov        # 覆盖率报告（可选）: pytest --cov=core --cov=src
