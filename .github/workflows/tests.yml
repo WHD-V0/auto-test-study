@@ -1,0 +1,45 @@
+name: API regression
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  regression:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Record installed versions
+        shell: bash
+        run: |
+          mkdir -p reports
+          python -m pip freeze > reports/installed-requirements.txt
+      - name: Validate and run Linux regression script
+        if: runner.os == 'Linux'
+        env:
+          PYTHON_BIN: python
+        run: |
+          bash -n scripts/run_regression.sh
+          bash scripts/run_regression.sh
+      - name: Run Windows local regression in two workers
+        if: runner.os == 'Windows'
+        run: python -m pytest -n 2 --html=reports/report.html --self-contained-html --junitxml=reports/junit.xml
+      - name: Upload results even when tests fail
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-${{ matrix.os }}
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 7
