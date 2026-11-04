@@ -1,84 +1,125 @@
-# 接口自动化测试 · 4 周速成路线
+# 接口自动化实战学习路线
 
-> 目标：不是"会写几个测试"，而是达到**可以直接上项目**的工作水准。
-> 每周结束都有一个里程碑，做到了再往下走。
+建议九个阶段，每阶段约一周，每天 1—2 小时。会 pytest 的人可按验收跳过第一阶段；Python 零基础应先补语言基础。时间仅供安排，未通过验收就继续练习，不以“读完代码”作为完成标准。
 
-## 你现在有什么
+学习循环：读需求 → 设计预期 → 编写测试 → 注入缺陷验证测试有效 → 排查失败 → 回归 → 提交成果。
 
-- `src/` + `tests/`：pytest 单元测试基础（断言 / fixture / mock / 参数化）
-- `core/` + `config/` + `data/`：企业级接口测试框架骨架
-- `tests/api/`：真实接口测试、responses 离线测试、数据驱动三套范例
+## 阶段一：Python 与 pytest 基础
 
-**学习方式：先读懂范例 → 改造它 → 做 exercises → 换一个公共接口从头写。**
+材料：`src/`、`tests/test_calculator.py`、`tests/test_user_service.py`、`tests/test_parametrize.py`、练习 01。
 
----
+- Day 1—2：断言、异常、浮点比较；区分业务预期与当前实现。
+- Day 3—4：fixture 的依赖、yield 清理、function/session 作用域、tmp_path。实际写一次清理代码，不只返回对象。
+- Day 5：参数化、可读的 ids、单用例失败时如何定位哪组数据。
+- Day 6—7：`-k`、`-x`、`--tb=short`、`--collect-only`；练习从错误栈找到触发条件。
 
-## 第 1 周：pytest 基础打牢（单元测试部分）
+交付：练习 01 的实现与测试，解释一处需求边界。验收：不抄样例写出正常、边界、异常测试；故意改坏实现后测试会失败。
 
-**每天 1-2 小时。材料：`tests/test_calculator.py`、`test_user_service.py`、`test_parametrize.py`、`exercises/exercise_01_basic.md`**
+## 阶段二：HTTP 与用例设计
 
-- [ ] Day 1-2：函数级测试。断言、`pytest.raises`、测试命名规范。手写 10 个测试
-- [ ] Day 3-4：fixture。`yield` 前后置、fixture 互相调用、`scope` 作用域、`tmp_path` / `capsys` 内置 fixture
-- [ ] Day 5：参数化。`parametrize`、`ids`、`pytest.param` 标记个别数据
-- [ ] Day 6-7：运行与调试。`-k` 筛选、`--tb=short`、`-x` 首败即停、`pytest.ini` 配置
+材料：`docs/API_CONTRACT.md`、`docs/TEST_DESIGN.md`、本地靶场，练习 03 的设计部分。
 
-**里程碑**：能独立完成 `exercise_01_basic.md`，说清楚"fixture 和普通函数传参有什么区别"。
+- Day 1—2：请求方法、URL、query、JSON、headers、401/403/404/409/5xx、204 空响应。
+- Day 3—4：按等价类、边界、权限矩阵和状态变化写测试设计。没有文档依据的预期先提问，不根据返回结果猜需求。
+- Day 5：手动运行靶场，观察创建后再查询、重启后再查询的区别。
+- Day 6—7：把一次手工验证变成自动测试，分别断言状态码、结构、业务值与副作用。
 
-## 第 2 周：接口测试核心技能
+交付：至少 12 条用例，包含编号、需求、前置、输入、预期和优先级。验收：能说明为什么选这些用例、缺少哪些覆盖；正常返回不能证明越权保护生效。
 
-**材料：`tests/api/test_responses_mock.py`、`core/api_client.py`、`exercises/exercise_02_mock.md`**
+## 阶段三：独立、可清理的业务测试
 
-- [ ] Day 1-2：HTTP 基础 + requests。方法、状态码、headers、query/body。读 `core/api_client.py` 直到每行都懂
-- [ ] Day 3-4：responses 离线测试。逐个跑 `test_responses_mock.py`，理解每个用例为什么这么写
-- [ ] Day 5：异常分支。超时、5xx、状态码不符——接口测试一半价值在这里
-- [ ] Day 6-7：mock 进阶。`patch`、`MagicMock`、`side_effect`，完成 `exercise_02_mock.md`
+材料：`tests/workflow/conftest.py`、`tests/workflow/test_tasks.py`、练习 03。
 
-**里程碑**：给你一个没见过的封装类，能不碰网络就测完它所有分支。
+- Day 1—2：通过真实 HTTP 完成同一资源的 CRUD；更新和删除都再读一次确认。
+- Day 3：登录 fixture、两个用户的 token 隔离、401 与 403 的区别。
+- Day 4：唯一测试数据、创建工厂与 yield 清理。测试中途断言失败也应清理已经创建的资源。
+- Day 5：列表中校验所有元素与业务过滤条件；Schema 通过不等于业务正确。
+- Day 6—7：单独运行、重复运行、调换顺序、`-n 2`；排查硬编码 ID 和共享状态。
 
-## 第 3 周：企业级接口自动化实战
+交付：至少 12 条本地业务测试。验收：不依赖前一个测试创建数据；不访问公共网络；清理逻辑允许测试已删除的资源返回 404。
 
-**材料：`tests/api/test_jsonplaceholder_real.py`、`test_data_driven.py`、`config/`、`data/`**
+## 阶段四：SQL 与接口数据核对
 
-- [ ] Day 1-2：跑通真实接口用例，理解"状态码 + Schema + 业务字段"三层断言
-- [ ] Day 3：JSON Schema。给 `/comments`、`/albums` 等新接口各写一个 Schema
-- [ ] Day 4：CRUD 链路 + 接口依赖。仿写 `test_full_crud`，处理 token 传递（`set_token` 的用法）
-- [ ] Day 5：数据驱动。往 `data/users.yaml` 加数据，观察用例自动增加；换 `reqres.in` 重写一遍
-- [ ] Day 6-7：**大作业** —— 完成 `exercise_03_api.md`：为公共接口从零搭一套用例
+材料：[SQL 实战](docs/SQL.md)、练习 05、`sql/`、`tests/workflow/test_database_checks.py`。
 
-**里程碑**：不参照本项目，能独立为任意 REST 接口写出结构合理的测试。
+- Day 1—2：SELECT、WHERE、排序、LIKE、IN、NULL；明确查询对象与业务预期。
+- Day 3—4：JOIN、GROUP BY/HAVING、重复计数、缺失关联数据。
+- Day 5：事务提交/回滚、索引与 EXPLAIN 基础。
+- Day 6—7：只读连接、参数绑定；为接口加落库断言，核对非法更新未部分写入。
 
-## 第 4 周：工程化与面试能力（拉开差距的部分）
+交付：至少 8 条独立查询及预期结果、事务实验和一个新增落库断言。验收：能解释零任务用户、NULL 与空串、LEFT JOIN 计数；知道 SQLite 到 MySQL 需重新验证什么。
 
-- [ ] Day 1：框架分层思想。能画出本项目 `config / core / data / tests` 的分层图，说清每层职责
-- [ ] Day 2：报告与并行。`pytest --html=reports/report.html --self-contained-html`、`pytest -n auto`、`--reruns 2`
-- [ ] Day 3：CI。写一个 GitHub Actions，push 自动跑测试并上传报告（可让 AI 帮你生成）
-- [ ] Day 4-5：**大作业** —— 完成 `exercise_04_framework.md`：设计一个你自己的接口测试框架
-- [ ] Day 6：简历 + 面试题准备（见下）
-- [ ] Day 7：复盘，把本项目所有 exericse 重做一遍
+## 阶段五：客户端、Mock 与失败定位
 
-**里程碑**：有自己的框架作品 + 一个能跑的 CI，简历上可以写"独立搭建接口自动化测试框架"。
+材料：`core/api_client.py`、`tests/test_client_contract.py`、`tests/api/test_responses_mock.py`、`docs/DEBUGGING.md`、练习 02。
 
----
+- Day 1—2：先直接使用 requests，再解释统一入口消除了什么重复；区分网络异常、HTTP 异常、JSON 解析失败和业务断言失败。
+- Day 3：patch 与 responses 的边界。Mock 能验证客户端行为，不能证明远端遵守契约。
+- Day 4：GET 的 503 重试、POST 不自动重放；请求重试和 pytest 整条用例重跑的副作用不同。
+- Day 5：日志不记录凭据与响应正文；本地查看必要证据，输出前脱敏。
+- Day 6—7：完成三次故障实验：非法响应、错误状态码、业务规则被改坏；分别给出定位依据。
 
-## 企业面试高频考点（速成时按此自查）
+交付：练习 02 和至少一份缺陷报告。验收：不使用“加重试后绿了”作为根因解释；能区分客户端、服务端、测试数据和环境问题。
 
-1. pytest fixture 的 scope 有哪几种？conftest.py 的加载机制？
-2. 接口测试怎么设计用例？（正常 / 边界 / 异常 / 鉴权 / 幂等 / 并发）
-3. mock 和 responses/stub 的区别？什么场景必须 mock？
-4. 接口之间有依赖怎么处理？（token 传递、数据上下文、setup 用例）
-5. 测试数据怎么管理？（配置分离、数据驱动、敏感信息环境变量）
-6. 用例失败了怎么定位？（分层断言、日志、报告、重试机制的利弊）
-7. 你的框架怎么设计的？为什么这么分层？（第 4 周大作业就是答案）
+## 阶段六：Linux 与回归排障
 
-## 常用命令速查
+材料：[Linux 实战](docs/LINUX.md)、练习 06、`scripts/run_regression.sh`。
 
-```bash
-pytest                                   # 全量运行
-pytest -m "not real_api"                 # 离线跑（跳过真实接口）
-pytest -m smoke                          # 只跑冒烟
-pytest tests/api -v --tb=short           # 指定目录 + 简短报错
-pytest --html=reports/report.html --self-contained-html   # HTML 报告
-pytest -n auto                           # 多进程并行
-pytest --reruns 2                        # 失败自动重试 2 次
-TEST_ENV=dev pytest                      # 切换环境
-```
+- Day 1—2：Linux/WSL 环境、目录、权限、虚拟环境；不要复用 Windows venv。
+- Day 3—4：进程、监听端口、curl 与日志；演练服务未启动和端口冲突。
+- Day 5：资源观察、错误 token 与业务故障的区别。
+- Day 6—7：Bash 引用、重定向、tee 与 pipefail；验证失败退出码。
+
+交付：Linux 上的一次正常回归和四份故障记录。验收：不用重启或批量 kill 代替定位；测试失败能传递给脚本和 CI。
+
+## 阶段七：CI 与稳定回归
+
+材料：`.github/workflows/tests.yml`、`pytest.ini`、`docs/DELIVERY.md`。
+
+- Day 1—2：理解本地/公共 API 标记，默认回归不依赖外网服务。
+- Day 3：阅读 Linux / Windows CI，解释 Python 版本、依赖、执行命令、失败退出码。
+- Day 4：HTML 面向人工阅读，JUnit 面向 CI；测试失败时仍上传报告。
+- Day 5：使用两个 worker 验证隔离，解释为什么每个 worker 使用自己的数据库和端口。
+- Day 6—7：检查安装版本记录；在失败报告中找到场景、预期、实际和最短复现命令。
+
+交付：自己的仓库中一次成功 CI、一次故意失败 CI 及对应报告。验收：别人按 README 能跑通；失败不会被重试或忽略退出码掩盖。
+
+## 阶段八：JMeter 与基础负载实验
+
+材料：[JMeter 实战](docs/JMETER.md)、练习 07、`performance/`、`tools/check_jtl.py`。
+
+- Day 1—2：线程组、请求默认值、headers、JSON 提取与参数化。
+- Day 3：token/ID 关联、HTTP 与业务断言、预期 404。
+- Day 4：非 GUI、JTL、HTML 报告；进程退出 0 不代表断言全部通过。
+- Day 5：1/2/5 线程低负载对照，解释思考时间和请求比例。
+- Day 6—7：按接口分析 P95、吞吐和错误率，结合环境证据填写报告。
+
+交付：JMX、成功/故意失败的 JTL 与检查器结果、对照报告。验收：样本数量完整，失败被识别；不把本机教学靶场结果写成生产容量。
+
+## 阶段九：需求变更与交付评审
+
+材料：练习 04。
+
+- Day 1：写一页设计说明，说明风险、取舍和不覆盖范围。
+- Day 2—4：实现一个新业务需求，先补契约和用例设计，再实现并回归。
+- Day 5：补鉴权、数据清理和旧功能回归，验证并行运行。
+- Day 6—7：写缺陷报告和交付说明，演示测试如何发现故障。
+
+交付：需求变更、代码、测试设计、CI、缺陷报告。验收：能讲清一条失败如何从现象定位到原因；能解释每个抽象的用途，不以目录数量或插件数量证明工作能力。
+
+## 完成后的拓展顺序
+
+1. 接入团队实际接口：OpenAPI、测试账号、授权范围、测试环境与数据回收。
+2. 加入业务状态机、重复提交与幂等键；没有约定幂等机制前不自动重试写操作。
+3. 学习数据库核对、异步任务轮询与超时预算、第三方依赖隔离。
+4. 需要时再引入性能、安全、契约兼容性测试，这些不等同于当前功能测试。
+
+面试准备应围绕自己的交付：测到了什么缺陷、为何这样设计、怎样避免互相污染、失败如何定位，以及哪些风险还没有覆盖。
+
+## 教程最后：成果验收、简历与面试
+
+1. 阅读 [学完后能做什么](docs/LEARNING_OUTCOMES.md)，用能力—证据表完成自查和综合考核。
+2. 阅读 [简历与面试](docs/RESUME_INTERVIEW.md)，只保留自己完成的条目，填入真实贡献与测量结果。
+3. 准备作品包：个人贡献、用例与代码、SQL/Linux 作业、CI、JMeter 原始数据和缺陷报告。
+
+能讲清一个真实失败的定位过程，比宣称“精通所有工具”更有价值。

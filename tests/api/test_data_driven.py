@@ -24,8 +24,9 @@ USER_SCHEMA = {
 
 # yaml 数据在收集期就要用（parametrize 的参数不能来自 fixture），
 # 所以这里直接在模块级加载 —— 企业项目通常封装成 data_loader 工具
+from pathlib import Path
 import yaml
-with open("data/users.yaml", encoding="utf-8") as _f:
+with (Path(__file__).resolve().parents[2] / "data" / "users.yaml").open(encoding="utf-8") as _f:
     _data = yaml.safe_load(_f)
 
 

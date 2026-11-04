@@ -3,7 +3,7 @@
 学习要点（对应企业真实项目）：
   - 用 marker 区分"真实接口"用例，离线环境可整体跳过
   - Schema 校验响应结构，而不是逐字段写死
-  - CRUD 全流程：接口之间有依赖（创建返回的 id 供后续用例使用）
+  - 各种 HTTP 方法演示；真实持久化闭环见 tests/workflow/
   - 业务异常场景（404、参数过滤）
 
 运行:  pytest tests/api/test_jsonplaceholder_real.py
@@ -67,24 +67,24 @@ class TestQuery:
         assert resp.text == "{}"
 
 
-# ── CRUD 全流程 ─────────────────────────────────
+# ── 公共接口方法演示 ─────────────────────────────────
 
-class TestCrudFlow:
-    """一个完整业务链路：创建 -> 查询 -> 修改 -> 删除
+class TestHttpMethods:
+    """公共伪 REST 的方法演示，不能证明业务闭环
 
-    学习要点 1：接口依赖（后一步用前一步返回的 id）
+    学习要点 1：真正接口依赖必须操作同一资源，本示例不具备此条件
     学习要点 2：认清靶场特性 —— JSONPlaceholder 是"伪 REST"，
       POST 返回 201 + id=101，但资源并不持久化，GET /posts/101 是 404。
       真实项目接口不会这样，所以"查询/修改/删除"步骤对已有资源 /posts/1 操作。
       接口测试的第一课：写用例前先用 curl/Postman 摸清接口真实行为。
     """
 
-    def test_full_crud(self, api_client):
+    def test_http_methods_demo(self, api_client):
         # 1. 创建（REST 惯例：创建成功返回 201）
-        payload = {"title": "速成学习", "body": "接口自动化", "userId": 1}
+        payload = {"title": "接口学习", "body": "接口自动化", "userId": 1}
         created = api_client.post_json("/posts", payload)
         assert_schema(created, POST_SCHEMA, "创建结果")
-        assert created["title"] == "速成学习"  # 服务端应原样返回提交内容
+        assert created["title"] == "接口学习"  # 服务端应原样返回提交内容
 
         # 2. 查询（对已有资源，见上方说明）
         detail = api_client.get_json("/posts/1")

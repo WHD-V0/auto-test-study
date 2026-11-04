@@ -1,7 +1,7 @@
 """responses 库离线接口测试 —— 不发真实网络请求，也能测"接口层"逻辑
 
 为什么需要它：
-  - 真实接口测试慢、依赖环境；日常开发中大部分接口用例应该离线跑
+  - 客户端行为适合离线验证；服务端业务仍需真实集成测试
   - responses 在 requests 库层面伪造响应，比 unittest.mock 更贴近真实 HTTP
     （状态码、headers、json 序列化都是真实行为）
 
@@ -10,6 +10,8 @@
   - 校验"发出去的请求"是否正确（URL、query、body）
   - 模拟各种状态码/超时，覆盖异常分支
 """
+import json
+
 import pytest
 import responses
 
@@ -20,7 +22,8 @@ from core.api_client import APIClient, APIError
 @pytest.fixture
 def client():
     """离线测试用自己的客户端实例，URL 来自同一份配置（不发请求，无网络开销）"""
-    return APIClient(max_retries=0)
+    with APIClient(max_retries=0) as api:
+        yield api
 
 
 # ── 基础用法 ────────────────────────────────────
@@ -66,7 +69,7 @@ class TestResponsesBasics:
         assert result["id"] == 101
         sent = responses.calls[0].request
         assert sent.headers["Content-Type"] == "application/json"
-        assert b'"title": "t"' in sent.body or '"title":"t"' in sent.body
+        assert json.loads(sent.body) == {"title": "t", "body": "b", "userId": 1}
 
 
 # ── 异常分支覆盖 ─────────────────────────────────
