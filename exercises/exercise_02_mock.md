@@ -1,5 +1,7 @@
 # 练习 02：隔离依赖与验证客户端行为
 
+每天怎么做：[阶段五逐日教程](../docs/daily/05-client-mock.md)，包含每天的测试任务、命令、故障证据与验收。
+
 目标：知道哪些行为适合 Mock，哪些必须通过真实服务验证。材料：`tests/test_api_client.py`、`tests/api/test_responses_mock.py`、`tests/test_client_contract.py`。
 
 ## 第一部分：HTTP 客户端

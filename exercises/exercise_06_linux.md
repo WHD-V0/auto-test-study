@@ -1,5 +1,7 @@
 # 练习 06：在 Linux 上运行并定位失败
 
+每天怎么做：[阶段六逐日教程](../docs/daily/06-linux.md)，含 Linux 专用环境、可执行的 Bash 命令、四种故障与完成标准。
+
 材料：[Linux 章节](../docs/LINUX.md)、scripts/run_regression.sh。
 
 1. 在 Linux/WSL 新建自己的虚拟环境，安装依赖，运行本地回归。

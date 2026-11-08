@@ -1,5 +1,7 @@
 # 练习 03：完成可复现的业务测试
 
+每天怎么做：先按 [阶段二](../docs/daily/02-http-design.md) 完成用例设计和手工验证，再按 [阶段三](../docs/daily/03-workflow.md) 实现独立、可清理的业务测试；每一天都有完成判定。
+
 靶场改为本项目本地任务 API，不依赖 Reqres 或其他外网服务。先读 `docs/API_CONTRACT.md` 和 `docs/TEST_DESIGN.md`。预计一个阶段完成，不要求一个下午写完。
 
 ## 先设计，再实现

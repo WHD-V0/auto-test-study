@@ -1,5 +1,7 @@
 # 练习 07：JMeter 业务链路与负载实验
 
+每天怎么做：[阶段八逐日教程](../docs/daily/08-jmeter.md)，从工具准备到成功/失败样本检查、对照实验与报告逐天操作验收。
+
 材料：[JMeter 章节](../docs/JMETER.md)、performance/task_workflow.jmx、performance/REPORT_TEMPLATE.md。
 
 1. 在 GUI 中逐项解释 token/ID 提取、状态码断言、业务断言和思考时间，确认无硬编码任务 ID。

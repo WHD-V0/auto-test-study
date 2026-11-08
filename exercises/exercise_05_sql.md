@@ -1,5 +1,7 @@
 # 练习 05：SQL 与接口数据核对
 
+每天怎么做：[阶段四逐日教程](../docs/daily/04-sql.md)，含自写查询的预期结果、事务命令、落库测试与每日验收。
+
 材料：[SQL 章节](../docs/SQL.md)、sql/seed.sql、sql/queries/、tests/workflow/test_database_checks.py。
 
 1. 用新路径初始化训练库，先画 users/tasks/task_events 的关系。

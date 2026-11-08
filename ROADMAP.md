@@ -4,18 +4,24 @@
 
 学习循环：读需求 → 设计预期 → 编写测试 → 注入缺陷验证测试有效 → 排查失败 → 回归 → 提交成果。
 
+本文件用于看阶段目标；每天具体打开什么、写什么、运行什么、怎样判定完成，请使用 [每日操作与验收手册](docs/daily/README.md)。编号“3-2”代表阶段三第 2 天。每阶段七个学习日，共 63 天；不按日历强行推进，完成当天勾选与证据再进入下一天。第一次从 [1-1：第一条测试](docs/daily/01-python-pytest.md#day-1) 开始。
+
 ## 阶段一：Python 与 pytest 基础
+
+逐日操作：[第 1 天](docs/daily/01-python-pytest.md#day-1) · [第 2 天](docs/daily/01-python-pytest.md#day-2) · [第 3 天](docs/daily/01-python-pytest.md#day-3) · [第 4 天](docs/daily/01-python-pytest.md#day-4) · [第 5 天](docs/daily/01-python-pytest.md#day-5) · [第 6 天](docs/daily/01-python-pytest.md#day-6) · [第 7 天](docs/daily/01-python-pytest.md#day-7)。
 
 材料：`src/`、`tests/test_calculator.py`、`tests/test_user_service.py`、`tests/test_parametrize.py`、练习 01。
 
 - Day 1—2：断言、异常、浮点比较；区分业务预期与当前实现。
 - Day 3—4：fixture 的依赖、yield 清理、function/session 作用域、tmp_path。实际写一次清理代码，不只返回对象。
 - Day 5：参数化、可读的 ids、单用例失败时如何定位哪组数据。
-- Day 6—7：`-k`、`-x`、`--tb=short`、`--collect-only`；练习从错误栈找到触发条件。
+- Day 6—7：truncate 边界与异常；`-k`、`-x`、`--tb=short` 定位失败；闭卷复写与缺陷注入验收。`--collect-only` 在 Day 5 参数化时先练。
 
 交付：练习 01 的实现与测试，解释一处需求边界。验收：不抄样例写出正常、边界、异常测试；故意改坏实现后测试会失败。
 
 ## 阶段二：HTTP 与用例设计
+
+逐日操作：[HTTP、手工验证与用例设计的七天步骤](docs/daily/02-http-design.md)。
 
 材料：`docs/API_CONTRACT.md`、`docs/TEST_DESIGN.md`、本地靶场，练习 03 的设计部分。
 
@@ -28,17 +34,22 @@
 
 ## 阶段三：独立、可清理的业务测试
 
+逐日操作：[业务闭环、权限、清理与并行的七天步骤](docs/daily/03-workflow.md)。
+
 材料：`tests/workflow/conftest.py`、`tests/workflow/test_tasks.py`、练习 03。
 
-- Day 1—2：通过真实 HTTP 完成同一资源的 CRUD；更新和删除都再读一次确认。
-- Day 3：登录 fixture、两个用户的 token 隔离、401 与 403 的区别。
+- Day 1：通过真实 HTTP 完成同一资源的 CRUD；更新和删除都再读一次确认。
+- Day 2：登录 fixture、两个用户的 token 隔离、401 与 403 的区别。
+- Day 3：列表中校验所有元素、Schema、用户隔离、排序与删除副作用；Schema 通过不等于业务正确。
 - Day 4：唯一测试数据、创建工厂与 yield 清理。测试中途断言失败也应清理已经创建的资源。
-- Day 5：列表中校验所有元素与业务过滤条件；Schema 通过不等于业务正确。
+- Day 5：输入边界、未知字段、非法 JSON 和更新原子性。
 - Day 6—7：单独运行、重复运行、调换顺序、`-n 2`；排查硬编码 ID 和共享状态。
 
 交付：至少 12 条本地业务测试。验收：不依赖前一个测试创建数据；不访问公共网络；清理逻辑允许测试已删除的资源返回 404。
 
 ## 阶段四：SQL 与接口数据核对
+
+逐日操作：[查询、事务、索引与落库核对的七天步骤](docs/daily/04-sql.md)。
 
 材料：[SQL 实战](docs/SQL.md)、练习 05、`sql/`、`tests/workflow/test_database_checks.py`。
 
@@ -50,6 +61,8 @@
 交付：至少 8 条独立查询及预期结果、事务实验和一个新增落库断言。验收：能解释零任务用户、NULL 与空串、LEFT JOIN 计数；知道 SQLite 到 MySQL 需重新验证什么。
 
 ## 阶段五：客户端、Mock 与失败定位
+
+逐日操作：[客户端测试、故障实验与缺陷报告的七天步骤](docs/daily/05-client-mock.md)。
 
 材料：`core/api_client.py`、`tests/test_client_contract.py`、`tests/api/test_responses_mock.py`、`docs/DEBUGGING.md`、练习 02。
 
@@ -63,9 +76,11 @@
 
 ## 阶段六：Linux 与回归排障
 
+逐日操作：[Linux 环境、四种故障与回归脚本的七天步骤](docs/daily/06-linux.md)。
+
 材料：[Linux 实战](docs/LINUX.md)、练习 06、`scripts/run_regression.sh`。
 
-- Day 1—2：Linux/WSL 环境、目录、权限、虚拟环境；不要复用 Windows venv。
+- Day 1—2：Linux/WSL 环境、目录、权限、专用虚拟环境与首次脚本回归；不要复用 Windows venv。
 - Day 3—4：进程、监听端口、curl 与日志；演练服务未启动和端口冲突。
 - Day 5：资源观察、错误 token 与业务故障的区别。
 - Day 6—7：Bash 引用、重定向、tee 与 pipefail；验证失败退出码。
@@ -74,29 +89,36 @@
 
 ## 阶段七：CI 与稳定回归
 
+逐日操作：[报告、成功/失败 CI 与复现交付的七天步骤](docs/daily/07-ci.md)。
+
 材料：`.github/workflows/tests.yml`、`pytest.ini`、`docs/DELIVERY.md`。
 
-- Day 1—2：理解本地/公共 API 标记，默认回归不依赖外网服务。
+- Day 1：理解本地/公共 API 标记，默认回归不依赖外网服务。
+- Day 2：生成并检查 HTML、JUnit 与实际安装版本；HTML 面向人工阅读，JUnit 面向 CI。
 - Day 3：阅读 Linux / Windows CI，解释 Python 版本、依赖、执行命令、失败退出码。
-- Day 4：HTML 面向人工阅读，JUnit 面向 CI；测试失败时仍上传报告。
-- Day 5：使用两个 worker 验证隔离，解释为什么每个 worker 使用自己的数据库和端口。
-- Day 6—7：检查安装版本记录；在失败报告中找到场景、预期、实际和最短复现命令。
+- Day 4：在自己的仓库运行成功 CI，下载两个系统的报告。
+- Day 5：故意失败 CI，验证失败后仍上传报告，再恢复通过。
+- Day 6—7：两个 worker 隔离、最短复现、版本记录与干净环境交付。
 
 交付：自己的仓库中一次成功 CI、一次故意失败 CI 及对应报告。验收：别人按 README 能跑通；失败不会被重试或忽略退出码掩盖。
 
 ## 阶段八：JMeter 与基础负载实验
 
+逐日操作：[工具准备、关联、断言与对照报告的七天步骤](docs/daily/08-jmeter.md)。
+
 材料：[JMeter 实战](docs/JMETER.md)、练习 07、`performance/`、`tools/check_jtl.py`。
 
-- Day 1—2：线程组、请求默认值、headers、JSON 提取与参数化。
-- Day 3：token/ID 关联、HTTP 与业务断言、预期 404。
-- Day 4：非 GUI、JTL、HTML 报告；进程退出 0 不代表断言全部通过。
+- Day 1—2：工具与靶场准备、GUI 线程组、headers、token/ID 提取、HTTP/业务断言与预期 404。
+- Day 3：非 GUI、JTL、HTML 报告与样本数量校验；进程退出 0 不代表断言全部通过。
+- Day 4：故意改错断言，验证检查器非零退出，清理残留后恢复。
 - Day 5：1/2/5 线程低负载对照，解释思考时间和请求比例。
 - Day 6—7：按接口分析 P95、吞吐和错误率，结合环境证据填写报告。
 
 交付：JMX、成功/故意失败的 JTL 与检查器结果、对照报告。验收：样本数量完整，失败被识别；不把本机教学靶场结果写成生产容量。
 
 ## 阶段九：需求变更与交付评审
+
+逐日操作：[归档需求从设计到最终演示的七天步骤](docs/daily/09-delivery.md)。
 
 材料：练习 04。
 
