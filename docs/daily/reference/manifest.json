@@ -1,0 +1,1926 @@
+{
+  "version": 1,
+  "lessons": [
+    {
+      "stage": 1,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "tests/test_day01.py",
+          "source": "01/day01/tests/test_day01.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "三个函数各自创建计算器，互不依赖。actual 是实际结果，右边的常量是运行前确定的预期。把第一个预期暂时改成 6，应该只让第一条失败；恢复为 5 后三条通过。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_day01.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "当天这份文件为 3 passed；故意改错第一条后为 1 failed、2 passed，恢复后 3 passed。"
+    },
+    {
+      "stage": 1,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "tests/test_day01.py",
+          "source": "01/day02/tests/test_day01.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "src/string_utils.py",
+          "source": "01/day02/src/string_utils.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "tests/test_string_utils.py",
+          "source": "01/day02/tests/test_string_utils.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "s[::-1] 对列表也能反转，所以列表场景能证明类型校验确实存在。raises 内执行被测操作；函数按约定抛异常时，测试本身通过。approx 只解决浮点数的合理误差。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_day01.py",
+            "tests/test_string_utils.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "计算器累计 5 条、字符串 3 条，共 8 passed。"
+    },
+    {
+      "stage": 1,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "tests/test_day03_fixtures.py",
+          "source": "01/day03/tests/test_day03_fixtures.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "默认 function 作用域会为两条测试分别调用 service。临时改为 @pytest.fixture(scope=\"session\") 后，按本文件顺序执行时第二条会看到第一条留下的用户；恢复默认后重新通过。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_day03_fixtures.py",
+            "-q",
+            "-s"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "2 passed，并有两次 prepare service；session 实验会出现共享状态造成的失败。"
+    },
+    {
+      "stage": 1,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "tests/test_day03_fixtures.py",
+          "source": "01/day04/tests/test_day03_fixtures.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "这段追加到昨天的文件，沿用 pytest、User、UserService 和 service。finally 即使遇到测试断言失败也执行。保存和加载使用不同对象，避免只检查原对象而漏掉文件持久化。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_day03_fixtures.py",
+            "-q",
+            "-s"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "文件累计 4 passed，出现 cleaned；把读取预期临时改为 wrong 时该条失败但仍打印 cleaned。"
+    },
+    {
+      "stage": 1,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "src/string_utils.py",
+          "source": "01/day05/src/string_utils.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "tests/test_string_utils.py",
+          "source": "01/day05/tests/test_string_utils.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "提供的是本日结束后的完整字符串模块与测试文件；与自己的代码对比合并，不重复定义同名函数。lower 处理大小写，replace 只移除普通空格。元音计数把每个 True 计为 1。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_string_utils.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "字符串文件共 12 passed；用 -k mixed-case 可以只选中 Abba 那组。"
+    },
+    {
+      "stage": 1,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "src/string_utils.py",
+          "source": "01/day06/src/string_utils.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "tests/test_string_utils.py",
+          "source": "01/day06/tests/test_string_utils.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "这是四个函数和全部测试的完整版本。len(s)<=max_len 要先于拼后缀；需要截断时正文与后缀一起受总长度限制。先排除 bool，再检查 int，因为 isinstance(True,int) 为 True。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_string_utils.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "字符串文件共 26 passed；-k truncate 选中 14 条。"
+    },
+    {
+      "stage": 1,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "tests/test_week01_review.py",
+          "source": "01/day07/tests/test_week01_review.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "exercises/verify_string_mutations.py",
+          "source": "01/day07/exercises/verify_string_mutations.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": "从项目根目录以 python -m exercises.verify_string_mutations 运行；try/finally 保证实验后恢复原始文件字节。"
+        }
+      ],
+      "explanation": "先自己做闭卷题，再对照四条参考测试。故障脚本每次从原始源码生成一种缺陷，并在 finally 恢复；它不会提交缺陷。Python 使用 -B 避免快速改回时复用旧字节码。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.verify_string_mutations"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "两次子测试各 1 failed 属于预期；恢复后 30 passed，脚本最终退出 0。"
+    },
+    {
+      "stage": 2,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "exercises/http_day01.py",
+          "source": "02/day01/exercises/http_day01.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "docs/http_notes.md",
+          "source": "02/day01/docs/http_notes.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "保持原来的终端 A 服务运行，终端 B 用下方模块运行命令执行 Python 版本。Session 的 with 负责关闭连接；trust_env=False 只针对本机教学地址。默认地址可通过 LESSON_BASE_URL 改成测试服务地址。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.http_day01"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "打印 status: 200、JSON 内容类型、body: {'status': 'ok'}，脚本退出 0。"
+    },
+    {
+      "stage": 2,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "exercises/manual_http.py",
+          "source": "02/day02/exercises/manual_http.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "exercises/http_day02.py",
+          "source": "02/day02/exercises/http_day02.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "两个文件都要保存：manual_http 提供登录和显式状态检查，http_day02 使用它。finally 在业务断言失败时也回收本次登记的 ID，清理允许资源已删除的 404。状态码和字段都对才通过。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.http_day02"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "脚本打印 201 → 200 → 204 → 404，退出 0；本次 ID 不留在库中。"
+    },
+    {
+      "stage": 2,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "exercises/http_day03.py",
+          "source": "02/day03/exercises/http_day03.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "docs/task_cases.md",
+          "source": "02/day03/docs/task_cases.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "每个 tuple 都先写预期，再发送请求。成功分支校验归一化及再查询，失败分支校验未创建；finally 仅删除本轮创建的 ID。表格是可交付写法，执行状态需用自己的证据补上。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.http_day03"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "六个 case 各打印 PASS，脚本为 0；非法输入前后列表相等。"
+    },
+    {
+      "stage": 2,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "docs/task_cases.md",
+          "source": "02/day04/docs/task_cases.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "今天交付的是设计文档，所以上面给出完整的 15 条用例及权限矩阵，包含昨天六条输入场景。每条拒绝场景都写明用谁重新查询以验证数据没变。",
+      "checks": [],
+      "expected": "用例表15行，矩阵3种身份；每行有前置、输入、明确预期、清理、优先级与追溯测试。"
+    },
+    {
+      "stage": 2,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "exercises/restart_demo.py",
+          "source": "02/day05/exercises/restart_demo.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "手工 Ctrl+C 重启做完后，可以用这份代码对照完整过程。它用同一个临时 SQLite 文件启动两个不同服务实例，不依赖 8765；stop 会等待线程结束，旧实例 token 不会转移到新实例。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.restart_demo"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "脚本验证旧 token=401、新 token 下原 ID/字段完全一致，清理任务后退出 0。"
+    },
+    {
+      "stage": 2,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_tasks_extended.py",
+          "source": "02/day06/tests/workflow/test_tasks_extended.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "这是原来骨架应补成的完整版本，包括全部 import、Schema 和再查断言。task_factory 通过 POST 创建并检查 201，get_json 默认检查 200；工厂负责清理，无需手动服务。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks_extended.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "自己的 extended 文件 1 passed；停止终端 A 的手动服务后仍通过。"
+    },
+    {
+      "stage": 2,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_tasks_extended.py",
+          "source": "02/day07/tests/workflow/test_tasks_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "docs/week02_review.md",
+          "source": "02/day07/docs/week02_review.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "追加异常函数即可，不需要新的 import。比较完整前后列表，验证的是拒绝写入的副作用。复习记录演示如何解释测试意义；最后一项必须使用自己的运行证据。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks_extended.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "extended 文件累计 2 passed，用例表与两个测试名对应。"
+    },
+    {
+      "stage": 3,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_tasks_extended.py",
+          "source": "03/day01/tests/workflow/test_tasks_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": "接在第二阶段已有的 extended 文件后；重复的 import 可合并到文件顶部，同名测试只留一个。"
+        }
+      ],
+      "explanation": "路径只从当前创建响应的 ID 生成；更新响应与再查询都要等于 expected。先删除再查 404，避免把一次删除响应当作数据真的不存在。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks_extended.py::test_my_crud",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "本日新增 1 条闭环测试通过。"
+    },
+    {
+      "stage": 3,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_tasks_extended.py",
+          "source": "03/day02/tests/workflow/test_tasks_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "两组参数化展开成 5 个场景。PUT 才需要 JSON，GET/DELETE 不加无关 body；拒绝后始终由资源主人再查原对象。每条测试都有独立 fixture。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks_extended.py",
+            "-k",
+            "auth or other_user",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "本日选中 5 passed，其他日期的测试为 deselected。"
+    },
+    {
+      "stage": 3,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_tasks_extended.py",
+          "source": "03/day03/tests/workflow/test_tasks_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "列表必须逐元素验证 owner 和 Schema；自己/对方 ID 的断言证明该测试准备的数据被正确隔离。排序比较只检查 ID 序列，不假定全库条数固定。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks_extended.py",
+            "-k",
+            "list",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "本日列表测试 2 passed。"
+    },
+    {
+      "stage": 3,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "tests/workflow/conftest.py",
+          "source": "03/day04/tests/workflow/conftest.py",
+          "mode": "replace_function",
+          "name": "task_factory",
+          "language": null,
+          "note": "仅替换该文件原来的 task_factory 函数（含装饰器）；其他 fixture 和文件顶部 import 保留。"
+        },
+        {
+          "target": "tests/workflow/test_cleanup_probe.py",
+          "source": "03/day04/tests/workflow/test_cleanup_probe.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "清理循环先 DELETE，再 GET 404，最后打印 verified。故意失败文件只用于本日实验，不永久留在 tests；明天的恢复代码会还原工厂并删除探针。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_cleanup_probe.py",
+            "-q",
+            "-s"
+          ],
+          "exit_code": 1,
+          "contains": [
+            "cleanup verified",
+            "1 failed"
+          ]
+        }
+      ],
+      "expected": "1 failed 属于预期，同时必须出现 cleanup verified；不得出现 teardown ERROR。"
+    },
+    {
+      "stage": 3,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_cleanup_probe.py",
+          "mode": "delete"
+        },
+        {
+          "target": "tests/workflow/conftest.py",
+          "source": "03/day05/tests/workflow/conftest.py",
+          "mode": "replace_function",
+          "name": "task_factory",
+          "language": null,
+          "note": "恢复昨天临时修改的工厂；保留其余内容。"
+        },
+        {
+          "target": "tests/workflow/test_tasks_extended.py",
+          "source": "03/day05/tests/workflow/test_tasks_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "先删掉昨天的故意失败探针并恢复清理工厂，再追加本日场景。title 81 与 80 成对；原子性用整个旧对象比较，防止只检查 status 而遗漏 title 已被写入。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks_extended.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "第三阶段从零累计为 19 条；若保留第二阶段两条则为 21 条，全部通过。"
+    },
+    {
+      "stage": 3,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "exercises/check_workflow_independence.py",
+          "source": "03/day06/exercises/check_workflow_independence.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "这是把本日六种运行方式写成可重复执行的脚本。check=True 遇到失败立即暴露，不继续打印“全部通过”；没有自动重试。脚本本身不复制 ID 或共享 token。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.check_workflow_independence"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "六次运行均退出 0，最后打印全部通过。"
+    },
+    {
+      "stage": 3,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "exercises/verify_owner_mutation.py",
+          "source": "03/day07/exercises/verify_owner_mutation.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "脚本先跑正常基线，再暂时禁用 owner 检查，最后恢复并重跑。Bob DELETE 的缺陷实验可能导致主人再查 404，这也属于越权造成的数据破坏；最终必须恢复权限，不能保留缺陷。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.verify_owner_mutation"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "正常3 passed → 注入后权限场景失败 → 恢复后3 passed，脚本最终退出0。"
+    },
+    {
+      "stage": 4,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "sql/queries/my_all_tasks.sql",
+          "source": "04/day01/sql/queries/my_all_tasks.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "sql/queries/my_alice_tasks.sql",
+          "source": "04/day01/sql/queries/my_alice_tasks.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        }
+      ],
+      "explanation": "每个 .sql 文件是一条可被 tools.sql_lab 识别的查询。先初始化全新训练库，再执行查询；完整 SELECT 字段便于明确比较结果。以下输出是预期，不是替你执行的记录。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "tools.sql_lab",
+            "init",
+            "--db",
+            "reports/learning/sql-01.sqlite3"
+          ],
+          "exit_code": 0,
+          "contains": []
+        },
+        {
+          "args": [
+            "-m",
+            "tools.sql_lab",
+            "query",
+            "--db",
+            "reports/learning/sql-01.sqlite3",
+            "--name",
+            "my_alice_tasks"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "my_all_tasks 的 ID 顺序为101/102/201；my_alice_tasks 为102/101。"
+    },
+    {
+      "stage": 4,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "sql/queries/my_title_like.sql",
+          "source": "04/day02/sql/queries/my_title_like.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "sql/queries/my_status_in.sql",
+          "source": "04/day02/sql/queries/my_status_in.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "sql/queries/my_null_note.sql",
+          "source": "04/day02/sql/queries/my_null_note.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        }
+      ],
+      "explanation": "三份是不同的筛选目标。NULL 不是空字符串；把 IS NULL 临时替换成 ='' 会选中102，而 =NULL 不会匹配任何一行。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "tools.sql_lab",
+            "query",
+            "--db",
+            "reports/learning/sql-01.sqlite3",
+            "--name",
+            "my_null_note"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "LIKE选中101/102；IN加owner选中201；IS NULL只选中101。"
+    },
+    {
+      "stage": 4,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "sql/queries/my_user_counts.sql",
+          "source": "04/day03/sql/queries/my_user_counts.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "sql/queries/my_event_details.sql",
+          "source": "04/day03/sql/queries/my_event_details.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        }
+      ],
+      "explanation": "COUNT(t.id) 不计入 LEFT JOIN 补出的 NULL 任务，因此 Charlie 为0。事件查询的每行代表事件，任务102出现两次是正常的一对多展开。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "tools.sql_lab",
+            "query",
+            "--db",
+            "reports/learning/sql-01.sqlite3",
+            "--name",
+            "my_user_counts"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "alice=2、bob=1、charlie=0；事件明细4行。"
+    },
+    {
+      "stage": 4,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "sql/queries/my_busy_users.sql",
+          "source": "04/day04/sql/queries/my_busy_users.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "sql/queries/my_event_counts_wrong.sql",
+          "source": "04/day04/sql/queries/my_event_counts_wrong.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": "故意错误的任务计数口径，用于与下一个文件比较，不作为正确业务查询。"
+        },
+        {
+          "target": "sql/queries/my_event_counts_fixed.sql",
+          "source": "04/day04/sql/queries/my_event_counts_fixed.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "docs/sql_practice.md",
+          "source": "04/day04/docs/sql_practice.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "第八条主查询与重复计数实验分开存放，避免错误样例被误当成正确答案。DISTINCT 只解决本例“按任务计数”的粒度问题，不能不分目标到处添加。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "tools.sql_lab",
+            "query",
+            "--db",
+            "reports/learning/sql-01.sqlite3",
+            "--name",
+            "my_busy_users"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "my_busy_users仅alice=2；错误/修正计数分别为alice3/alice2。"
+    },
+    {
+      "stage": 4,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "exercises/sql_transaction_practice.py",
+          "source": "04/day05/exercises/sql_transaction_practice.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "BEGIN内更新与建索引，finally回滚两者，允许在同一训练库重复实验。占位符用于业务值，EXPLAIN拼接的是代码中固定的SELECT，不包含用户输入。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.sql_transaction_practice"
+          ],
+          "exit_code": 0,
+          "contains": [
+            "rollback verified"
+          ]
+        }
+      ],
+      "expected": "事务内done、回滚后open；通常从SCAN变为使用索引的SEARCH，具体文字随版本变化。"
+    },
+    {
+      "stage": 4,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_database_extended.py",
+          "source": "04/day06/tests/workflow/test_database_extended.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "两条测试完整提供了HTTP与SQL核对。SQL只能读fixture给的local_api_db，不能拿训练库路径替代。closing关闭连接，mode=ro禁止这里偷偷写业务数据。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_database_extended.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "2 passed；删除后无行、非法更新后title/status/owner完全不变。"
+    },
+    {
+      "stage": 4,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "sql/queries/my_department_counts.sql",
+          "source": "04/day07/sql/queries/my_department_counts.sql",
+          "mode": "replace",
+          "name": null,
+          "language": "sql",
+          "note": ""
+        },
+        {
+          "target": "exercises/check_sql_answers.py",
+          "source": "04/day07/exercises/check_sql_answers.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "闭卷题的WHERE筛选的是users部门，因此Charlie仍被LEFT JOIN保留。检查脚本把预期写成可执行断言，只校验专用种子数据；真实项目数据变化时不能照搬这些固定ID。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.check_sql_answers"
+          ],
+          "exit_code": 0,
+          "contains": []
+        },
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_database_extended.py",
+            "-n",
+            "2",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "查询脚本退出0；自己的两个落库测试双worker通过。"
+    },
+    {
+      "stage": 5,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "exercises/client_compare.py",
+          "source": "05/day01/exercises/client_compare.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "两种写法都明确超时并关闭Session；APIClient额外集中URL拼接、状态检查和日志。不要把封装当作能自动判断所有业务值的工具，业务预期仍由assert表达。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.client_compare"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "手动服务正常时脚本退出0，打印两种结果一致。"
+    },
+    {
+      "stage": 5,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "tests/test_client_extended.py",
+          "source": "05/day02/tests/test_client_extended.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "responses.activate保证这些地址由Mock接管。解析query、解析JSON后比较数据，不依赖URL参数顺序或JSON空格。返回的id=7只是Mock数据，不代表真实服务保存过任务。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_client_extended.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "2 passed；不会向client.test发送真实请求。"
+    },
+    {
+      "stage": 5,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "tests/test_client_extended.py",
+          "source": "05/day03/tests/test_client_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "前3条区分HTTP状态、无正文和JSON解析；第4条直接替换被当前客户端使用的session.request，演示patch的位置。_content只在构造测试Response时使用，不是日常访问响应的接口。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_client_extended.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "累计6 passed，包含完整patch示例。"
+    },
+    {
+      "stage": 5,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "tests/test_client_extended.py",
+          "source": "05/day04/tests/test_client_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "必须断言调用次数，才能证明“是否重放”。最终JSON正确不能独自证明首次请求没失败。POST即使配置了重试次数也不会自动重放。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_client_extended.py",
+            "-k",
+            "retry or replay",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "本日3 passed；GET调用次数2/1，POST为1。"
+    },
+    {
+      "stage": 5,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "tests/test_client_extended.py",
+          "source": "05/day05/tests/test_client_extended.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "caplog记录api日志，caught保存异常对象。正向检查POST/400能证明并非“没有任何日志所以没有泄漏”；负向检查四种假凭据。真实凭据不用于此实验。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_client_extended.py",
+            "-k",
+            "log",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "本日1 passed；整个客户端扩展文件累计10条。"
+    },
+    {
+      "stage": 5,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "exercises/diagnose_client.py",
+          "source": "05/day06/exercises/diagnose_client.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "tests/workflow/test_title81_reference.py",
+          "source": "05/day06/tests/workflow/test_title81_reference.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "exercises/verify_title_mutation.py",
+          "source": "05/day06/exercises/verify_title_mutation.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "诊断文件放exercises，显式运行时应有2条失败；正式客户端测试仍应通过。第三个实验用真实本机HTTP验证81字符应被拒绝，故障脚本自动恢复源码。它是教学注入，不能写成线上缺陷。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "exercises/diagnose_client.py",
+            "-q"
+          ],
+          "exit_code": 1,
+          "contains": [
+            "2 failed"
+          ]
+        },
+        {
+          "args": [
+            "-m",
+            "exercises.verify_title_mutation"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "诊断2 failed分别是解析/HTTP状态；业务规则注入时失败，恢复后通过，故障脚本最终0。"
+    },
+    {
+      "stage": 5,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "docs/bug_report_01.md",
+          "source": "05/day07/docs/bug_report_01.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        },
+        {
+          "target": "exercises/check_client_delivery.py",
+          "source": "05/day07/exercises/check_client_delivery.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        }
+      ],
+      "explanation": "缺陷报告给出完整叙述，但本人实际执行信息必须据实补充。交付脚本只跑应通过的正式测试；诊断文件留在exercises，不把故意失败掺进默认tests。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.check_client_delivery"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "10条自写客户端测试与原有契约/Mock测试全部通过。"
+    },
+    {
+      "stage": 6,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "exercises/linux/day01.sh",
+          "source": "06/day01/exercises/linux/day01.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        },
+        {
+          "target": "exercises/linux/common.sh",
+          "source": "06/day01/exercises/linux/common.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        }
+      ],
+      "explanation": "day01是实际执行脚本，common为后续脚本定位根目录与专用环境。保存为LF换行，用bash运行即可，不要求chmod。脚本不安装WSL或系统包；环境缺失先完成本章环境准备。",
+      "checks": [],
+      "expected": "Linux解释器可用，计算器测试通过，记录真实发行版/Python/pwd；本次文档维护只检查Bash语法，不能替代你的Linux实操。"
+    },
+    {
+      "stage": 6,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "exercises/linux/day02.sh",
+          "source": "06/day02/exercises/linux/day02.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        }
+      ],
+      "explanation": "set -e使真正回归失败时脚本在打印成功前停止。grep是日志筛选，不用它的退出码代替pytest结果。PYTHON_BIN把Linux专用解释器传给现有脚本。",
+      "checks": [],
+      "expected": "退出0，day02目录有report.html、junit.xml、pytest.log、installed-requirements.txt。"
+    },
+    {
+      "stage": 6,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "exercises/linux/start_service.sh",
+          "source": "06/day03/exercises/linux/start_service.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        }
+      ],
+      "explanation": "保存脚本后运行bash exercises/linux/start_service.sh。$!是本次后台进程PID，有限轮询检查服务真正就绪。PID写入文件供后续日使用，每次停止前还要核对命令行，不能盲信旧PID。",
+      "checks": [],
+      "expected": "health正常，打印正确进程和8765监听；服务继续在后台运行。"
+    },
+    {
+      "stage": 6,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "exercises/linux/day04_faults.sh",
+          "source": "06/day04/exercises/linux/day04_faults.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        }
+      ],
+      "explanation": "只有require_own_service确认本次靶场PID后才TERM。新服务绑定失败与停止后的curl连接失败是两种不同故障，分别留日志；脚本最后重启恢复。失败实验本身被验证后，教学脚本可以返回0。",
+      "checks": [],
+      "expected": "冲突进程非零且日志有地址占用；停服后curl非零；重启health恢复。"
+    },
+    {
+      "stage": 6,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "exercises/linux/day05_auth.sh",
+          "source": "06/day05/exercises/linux/day05_auth.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        }
+      ],
+      "explanation": "curl使用fail-with-body使401也成为非零退出，再核对401和unauthorized避免把网络失败误判为鉴权失败。health成功说明服务仍可用；资源观察只提供同时间窗证据。",
+      "checks": [],
+      "expected": "401+unauthorized、curl非零，health正常；磁盘/内存/CPU输出带日期。旧curl不支持选项时按原卡点说明调整。"
+    },
+    {
+      "stage": 6,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "exercises/linux/day06_exit_codes.sh",
+          "source": "06/day06/exercises/linux/day06_exit_codes.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        }
+      ],
+      "explanation": "if/else立即保存实际退出码，不能先跑tail再读$?。最后两个子shell仅演示管道退出行为，不修改项目脚本。正常回归失败仍由set-e暴露。",
+      "checks": [],
+      "expected": "错误路径非零且有日志；正确路径0；pipefail对照符合文字说明。"
+    },
+    {
+      "stage": 6,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "exercises/linux/day07_delivery.sh",
+          "source": "06/day07/exercises/linux/day07_delivery.sh",
+          "mode": "replace",
+          "name": null,
+          "language": "bash",
+          "note": ""
+        },
+        {
+          "target": "docs/linux_practice.md",
+          "source": "06/day07/docs/linux_practice.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "最终脚本跑完整默认回归，再停止核对过的服务。表格给出四种故障应如何写清，实际PID、版本、退出码与输出必须自己记录。",
+      "checks": [],
+      "expected": "完整Linux回归0，四种故障都有实际证据，本周手动服务已停止。"
+    },
+    {
+      "stage": 7,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "exercises/ci/day01_collect.ps1",
+          "source": "07/day01/exercises/ci/day01_collect.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "PowerShell的ErrorActionPreference不会自动把所有原生命令非零变为异常，因此显式检查LASTEXITCODE。前两条只收集；第三条才真正执行默认回归，不触发公共API。",
+      "checks": [],
+      "expected": "两份收集列表有差异；默认回归0，无需公共API密钥。"
+    },
+    {
+      "stage": 7,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "exercises/ci/day02_reports.ps1",
+          "source": "07/day02/exercises/ci/day02_reports.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "先保存pytest退出码再检查文件，避免被后续命令覆盖。HTML/XML按同一次运行生成；freeze记录实际版本，不替代依赖范围文件。",
+      "checks": [],
+      "expected": "三个文件存在、HTML/XML可打开、pytest退出0。"
+    },
+    {
+      "stage": 7,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": ".github/workflows/tests.yml",
+          "source": "07/day03/.github/workflows/tests.yml",
+          "mode": "replace",
+          "name": null,
+          "language": "yaml",
+          "note": "完整工作流参考；已有同等内容时无需重复新建。只用于你自己的仓库。"
+        }
+      ],
+      "explanation": "这是完整可用的workflow，含触发器、两系统矩阵、安装、版本记录、测试和always上传。阅读每个步骤再对照自己仓库；放在根目录.github/workflows才会生效，reference目录只是答案存档。",
+      "checks": [],
+      "expected": "能解释每个job和上传条件；远程执行结果必须在第4/5天实际触发后确认。"
+    },
+    {
+      "stage": 7,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "exercises/ci/day04_push.ps1",
+          "source": "07/day04/exercises/ci/day04_push.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        },
+        {
+          "target": "docs/ci_practice.md",
+          "source": "07/day04/docs/ci_practice.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "脚本不会替你提交所有文件。先按git status显式选择自己的练习文件，用git add -- 文件路径及git commit保存，再在自己的练习分支执行脚本。推送成功后仍要等待两个job并下载报告。",
+      "checks": [],
+      "expected": "自己仓库本次SHA的Ubuntu/Windows均成功，下载两份artifact并填真实链接。"
+    },
+    {
+      "stage": 7,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "tests/test_ci_probe.py",
+          "source": "07/day05/tests/test_ci_probe.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "exercises/ci/day05_failure.ps1",
+          "source": "07/day05/exercises/ci/day05_failure.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "probe是完整故意失败测试，只用于自己仓库练习分支。保存失败run与报告后，执行Remove-Item -LiteralPath tests/test_ci_probe.py，再git add -- tests/test_ci_probe.py、git commit -m \"Restore passing CI\"、git push origin HEAD；等待恢复run。不要先删证据。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/test_ci_probe.py",
+            "-q"
+          ],
+          "exit_code": 1,
+          "contains": [
+            "1 failed"
+          ]
+        }
+      ],
+      "expected": "失败run在probe断言红、仍上传报告；恢复run两系统绿。本地1 failed只能证明本地探针有效，不能代替远程验收。"
+    },
+    {
+      "stage": 7,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "tests/test_ci_probe.py",
+          "mode": "delete"
+        },
+        {
+          "target": "exercises/ci/day06_parallel.ps1",
+          "source": "07/day06/exercises/ci/day06_parallel.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "先确认故意失败文件已经删除并提交恢复。给出基线与完整并行命令，自己的extended同样要跑。复现旧失败需使用失败SHA或重建probe，不把当前文件不存在当作同一失败。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks.py",
+            "-n",
+            "2",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "串行/并行均通过；对照相同代码版本的CI与本地结果。"
+    },
+    {
+      "stage": 7,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "exercises/ci/day07_clean_room.ps1",
+          "source": "07/day07/exercises/ci/day07_clean_room.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "git archive只打包HEAD已提交内容，因此先提交你要交付的个人成果。使用新目录与新venv，避免旧环境掩盖依赖缺失；脚本不会删除旧目录，重做需改目录名。",
+      "checks": [],
+      "expected": "HEAD干净副本安装与默认回归通过，三次远程run记录和下载报告可打开。"
+    },
+    {
+      "stage": 8,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "exercises/jmeter/day01_environment.ps1",
+          "source": "08/day01/exercises/jmeter/day01_environment.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "先按原步骤在终端A启动专用服务；在终端B运行本脚本，-Jmeter传自己的安装路径。脚本只检查已安装工具，不自动下载，也不声称版本输出代表负载成功。",
+      "checks": [],
+      "expected": "Java与JMeter版本可读，health200，退出0。"
+    },
+    {
+      "stage": 8,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "performance/my_task_workflow.jmx",
+          "source": "08/day02/performance/my_task_workflow.jmx",
+          "mode": "replace",
+          "name": null,
+          "language": "xml",
+          "note": "完整JMX；可直接保存后用GUI打开。已有自己修改的文件时先对照，不覆盖个人成果。"
+        },
+        {
+          "target": "exercises/jmeter/day02_gui.ps1",
+          "source": "08/day02/exercises/jmeter/day02_gui.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "上面是完整计划文件，不需要凭描述自己拼XML。GUI中定位每线程登录、token/ID提取与每轮六个业务请求；调试结果树只临时启用，保存用于负载的计划前关闭。",
+      "checks": [],
+      "expected": "默认1线程3轮19个样本，关联与断言正确；XML能解析仍不等于JMeter引擎已实际运行。"
+    },
+    {
+      "stage": 8,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "exercises/jmeter/common.ps1",
+          "source": "08/day03/exercises/jmeter/common.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        },
+        {
+          "target": "exercises/jmeter/day03_smoke.ps1",
+          "source": "08/day03/exercises/jmeter/day03_smoke.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "common封装的是本周重复执行命令，显示了完整参数与退出码检查，不省略JTL门槛。今天脚本生成新目录smoke03；重做要换RunName。后续脚本都要先有这份common。",
+      "checks": [],
+      "expected": "19样本、0失败、检查器0；HTML在reports/learning/jmeter/smoke03/html/index.html。"
+    },
+    {
+      "stage": 8,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "performance/my_task_workflow_bad.jmx",
+          "source": "08/day04/performance/my_task_workflow_bad.jmx",
+          "mode": "replace",
+          "name": null,
+          "language": "xml",
+          "note": "故意失败计划；正确计划保持不变。完整XML便于直接对照仅改错的断言。"
+        },
+        {
+          "target": "exercises/jmeter/day04_failure.ps1",
+          "source": "08/day04/exercises/jmeter/day04_failure.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "坏计划的05_verify_update实际200、故意期望201。停止线程会留下任务，所以先检查success=false、再仅按本轮前缀清理，最后用正确计划在新目录重跑。",
+      "checks": [],
+      "expected": "坏计划检查器非零且有失败样本；残留清理；recovered04为19成功样本。"
+    },
+    {
+      "stage": 8,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "exercises/jmeter/day05_load.ps1",
+          "source": "08/day05/exercises/jmeter/day05_load.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "三档串行执行，除线程与ramp-up外条件保持一致；common遇到任一异常会抛错，不继续压下一档。名称同时用作结果目录和run_id，方便追溯清理。",
+      "checks": [],
+      "expected": "三档分别61/122/305样本、0失败；资源观测由你在相同时间窗记录。"
+    },
+    {
+      "stage": 8,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "exercises/jmeter/report_metrics.py",
+          "source": "08/day06/exercises/jmeter/report_metrics.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "performance/my_report.md",
+          "source": "08/day06/performance/my_report.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "指标脚本读取真实JTL并验证样本与失败数，缺文件会报错，不造数据。报告文字完整说明实验方法和指标口径；最后的实际环境、观察与结论仍需你据证据填写。",
+      "checks": [],
+      "expected": "python -m exercises.jmeter.report_metrics生成真实21行label对比（原计划7个label×3档），不是预填性能数字。"
+    },
+    {
+      "stage": 8,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "exercises/jmeter/day07_repeat.ps1",
+          "source": "08/day07/exercises/jmeter/day07_repeat.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "重复同一档仍用新run_id；保留两次结果比较波动，不挑快的一次。清理脚本逐前缀处理，输出实际残留数；最后手动Ctrl+C停止终端A的专用服务。",
+      "checks": [],
+      "expected": "重复档122成功样本，各轮残留核对完成；成功/失败/恢复/重复JTL都保留。"
+    },
+    {
+      "stage": 9,
+      "day": 1,
+      "artifacts": [
+        {
+          "target": "docs/change_archive.md",
+          "source": "09/day01/docs/change_archive.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        },
+        {
+          "target": "docs/archive_cases.md",
+          "source": "09/day01/docs/archive_cases.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "设计是可以交付的一页成品，状态表与15条用例写出完整预期。原需求未明确的自转换/重复参数以“参考选择”单列，不把实现决策冒充已经确认的契约。",
+      "checks": [],
+      "expected": "设计、状态表、15条用例齐全，能解释兼容性、迁移取舍与主要风险。"
+    },
+    {
+      "stage": 9,
+      "day": 2,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_archive.py",
+          "source": "09/day02/tests/workflow/test_archive.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "docs/API_CONTRACT.md",
+          "source": "09/day02/docs/API_CONTRACT.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": "变更后的完整契约；表格中的列表响应还受下方归档规则约束。"
+        }
+      ],
+      "explanation": "提供整个归档测试文件，避免只给函数名。make_state仅通过HTTP准备资源，不绕过转换规则。今天旧实现不支持归档，应先跑最前两条看到状态差异；完整文件会到第4天实现列表后才全绿。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_archive.py::test_done_to_archived_transition",
+            "tests/workflow/test_archive.py::test_open_to_archived_transition_is_conflict",
+            "-q"
+          ],
+          "exit_code": 1,
+          "contains": [
+            "2 failed"
+          ]
+        }
+      ],
+      "expected": "旧实现下最前两条在HTTP期望处失败；不能因抛错就改预期成400。"
+    },
+    {
+      "stage": 9,
+      "day": 3,
+      "artifacts": [
+        {
+          "target": "sandbox/task_api.py",
+          "source": "09/day03/sandbox/task_api.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": "这是仅完成状态转换后的服务完整文件；与自己的实现对比，先保留个人改动再合并。列表过滤在明天完成。"
+        },
+        {
+          "target": "tests/workflow/test_tasks.py",
+          "source": "09/day03/tests/workflow/test_tasks.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": "完整旧功能测试，仅Schema增加合法归档值；原有业务断言保持。"
+        }
+      ],
+      "explanation": "完整服务代码保留现有鉴权和数据库处理，仅resource增加状态校验。非法字段仍400、状态冲突409；校验结束才写库。Schema加archived允许值不会删除旧场景。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_archive.py",
+            "-k",
+            "transition or title or delete",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        },
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_tasks.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "12条转换/title/删除相关场景通过，旧功能测试通过；列表场景留到明天完成。"
+    },
+    {
+      "stage": 9,
+      "day": 4,
+      "artifacts": [
+        {
+          "target": "sandbox/task_api.py",
+          "source": "09/day04/sandbox/task_api.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": "完整最终归档服务：在昨天版本上补query解析、合法值校验、默认过滤和owner隔离。"
+        }
+      ],
+      "explanation": "dispatch用path路由，但self.path仍保留原URL，因此可以在collection直接解析query，不必重新传参。keep_blank_values=True确保空字符串被判400；owner仍使用绑定参数。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow/test_archive.py",
+            "tests/workflow/test_tasks.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "22条归档场景及原有业务场景通过，实际数量以collection为准。"
+    },
+    {
+      "stage": 9,
+      "day": 5,
+      "artifacts": [
+        {
+          "target": "tests/workflow/test_archive.py",
+          "source": "09/day05/tests/workflow/test_archive.py",
+          "mode": "append",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "exercises/archive_regression.ps1",
+          "source": "09/day05/exercises/archive_regression.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        }
+      ],
+      "explanation": "追加两条SQL测试；不要用SQL准备archived绕过HTTP转换。默认列表看不到archived不代表它已删，应按ID查询或用包含归档的列表核对清理。并行脚本只证明本地部分，Linux/CI需另行执行。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow",
+            "-n",
+            "2",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "归档与旧workflow并行通过，成功/冲突两种落库结果符合预期。"
+    },
+    {
+      "stage": 9,
+      "day": 6,
+      "artifacts": [
+        {
+          "target": "performance/my_archive_workflow.jmx",
+          "source": "09/day06/performance/my_archive_workflow.jmx",
+          "mode": "replace",
+          "name": null,
+          "language": "xml",
+          "note": ""
+        },
+        {
+          "target": "exercises/jmeter/common.ps1",
+          "source": "09/day06/exercises/jmeter/common.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": "在第八阶段helper上将清理时的列表改为include_archived=true，避免漏掉归档残留。"
+        },
+        {
+          "target": "exercises/jmeter/archive_smoke.ps1",
+          "source": "09/day06/exercises/jmeter/archive_smoke.ps1",
+          "mode": "replace",
+          "name": null,
+          "language": "powershell",
+          "note": ""
+        },
+        {
+          "target": "exercises/verify_archive_mutation.py",
+          "source": "09/day06/exercises/verify_archive_mutation.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "docs/bug_report_archive.md",
+          "source": "09/day06/docs/bug_report_archive.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "完整JMX增加归档PUT和列表GET两步，新增业务断言匹配当前ID/owner/status。common清理使用包含归档的列表。故障脚本验证默认过滤的业务断言，finally恢复源码；手动JMeter服务要先重启加载新代码。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.verify_archive_mutation"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "Python故障验证通过；实际JMeter执行应为1线程3轮25成功样本，未运行引擎不能勾选。"
+    },
+    {
+      "stage": 9,
+      "day": 7,
+      "artifacts": [
+        {
+          "target": "exercises/archive_demo.py",
+          "source": "09/day07/exercises/archive_demo.py",
+          "mode": "replace",
+          "name": null,
+          "language": null,
+          "note": ""
+        },
+        {
+          "target": "docs/my_delivery.md",
+          "source": "09/day07/docs/my_delivery.md",
+          "mode": "replace",
+          "name": null,
+          "language": "markdown",
+          "note": ""
+        }
+      ],
+      "explanation": "演示脚本完整跑拒绝与成功链路，并在finally回收同ID。交付说明提供可复现命令和贡献边界，所有实际链接/版本/结果用自己的证据补上。",
+      "checks": [
+        {
+          "args": [
+            "-m",
+            "exercises.archive_demo"
+          ],
+          "exit_code": 0,
+          "contains": []
+        },
+        {
+          "args": [
+            "-m",
+            "pytest",
+            "tests/workflow",
+            "-q"
+          ],
+          "exit_code": 0,
+          "contains": []
+        }
+      ],
+      "expected": "演示脚本和完整业务回归通过；Linux/CI/JMeter证据齐全后才能判定综合交付完成。"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import pytest
 from src.calculator import Calculator
 
 def test_add():
@@ -14,3 +15,7 @@ def test_add_zero():
     calc = Calculator()
     actual = calc.add(6, 0)
     assert actual == 6
+
+def test_divide_by_zero():
+    with pytest.raises(ValueError, match="除数不能为零"):
+        Calculator().divide(10, 0)

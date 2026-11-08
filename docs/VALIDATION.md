@@ -27,3 +27,16 @@
 - 当前工作区默认回归：111 passed、10 deselected，含学习者新增的 3 条第一天测试；未修改学习者的该文件。测试数量会随个人练习变化，不用作个人能力评分。
 
 本次未新增真实 Linux/WSL、JMeter 引擎或远程 GitHub Actions 实测结果。这些步骤在教程中明确要求学习者实际执行并留证，不能按静态检查直接勾选完成。
+
+## 每日完整参考代码验证（2026-11-08）
+
+在原操作手册中为全部 63 天补入“当天写完后的参考代码”、目标路径、写入方式、代码解释、可执行命令与预期结果。参考文件另存于 [按天索引](daily/reference/README.md)，未将答案覆盖到学习者的 src/tests。
+
+- [参考检查器](../tools/check_daily_reference.py) 在 reports 下建立临时项目副本，按天应用追加/替换/删除，再运行测试；设计日与需要外部工具的步骤不冒充本机实测。
+- 42 个学习日配置的 Python/HTTP/SQL 实验实际执行通过，包括字符串、fixture清理、重启持久化、CRUD/权限、顺序/并行、SQL、Mock、预期失败、源码恢复与归档变更。
+- 49 份 Python 参考通过语法检查；16 份 PowerShell 脚本通过解析；8 份 Bash 脚本通过 Git Bash 语法检查；3 份 JMX 通过 XML、sampler数量及hashTree配对检查；1 份 CI YAML 通过结构读取。
+- 321 个本地链接/锚点有效；每日文档与对应参考文件的代码内容一致。
+- 指标脚本通过构造CSV的测试，校验数量、按label统计、P95及Markdown输出。构造CSV只证明脚本可用，不是JMeter运行结果或性能数据。
+- PowerShell参考文件采用UTF-8带BOM，以兼容Windows PowerShell 5中的中文；Bash使用LF。
+
+可复现命令：`python -m tools.check_daily_reference`；仅查语法/结构/链接用 `--static-only`，单阶段用 `--stage 1`。完整参考中的Linux实操、远程CI、JMeter引擎与真实负载仍需在对应环境另行执行。学习者当前未完成的作业不被此临时副本检查改写。
